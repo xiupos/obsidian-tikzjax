@@ -99,7 +99,14 @@ export default class TikzjaxPlugin extends Plugin {
 			script.setAttribute("type", "text/tikz");
 			script.setAttribute("data-show-console", "true");
 
-			script.setText(this.tidyTikzSource(source));
+			const template = (body: string) => `
+				\\usepackage{tikz-cd}
+				\\begin{document}
+				${body}
+				\\end{document}
+			`;
+
+			script.setText(template(this.tidyTikzSource(source)));
 		});
 	}
 
